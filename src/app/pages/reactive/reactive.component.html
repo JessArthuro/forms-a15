@@ -1,0 +1,162 @@
+<h1 class="text-success mb-4">
+  Formularios <small class="text-secondary fw-normal fs-4">Reactivos</small>
+</h1>
+
+<form autocomplete="off" class="mb-5" [formGroup]="form" (ngSubmit)="guardar()">
+  <div class="row g-3 mb-4">
+    <div class="col-md-6">
+      <label for="inputName" class="form-label">Nombre</label>
+      <input
+        type="text"
+        class="form-control"
+        id="inputName"
+        formControlName="name"
+        [class.is-invalid]="nombreNoValido"
+      />
+      <div class="invalid-feedback" *ngIf="nombreNoValido">
+        El campo nombre es requerido.
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label for="inputLastName" class="form-label">Apellido</label>
+      <input
+        type="text"
+        class="form-control"
+        id="inputLastName"
+        formControlName="lastname"
+        [class.is-invalid]="apellidoNoValido"
+      />
+      <div class="invalid-feedback" *ngIf="apellidoNoValido">
+        El campo apellido es requerido.
+      </div>
+    </div>
+
+    <div class="col-12">
+      <label for="inputEmail" class="form-label">Correo</label>
+      <input
+        type="email"
+        class="form-control"
+        id="inputEmail"
+        formControlName="email"
+        [class.is-invalid]="correoNoValido"
+      />
+      <div class="invalid-feedback" *ngIf="correoNoValido">
+        El campo correo es requerido.
+      </div>
+    </div>
+
+    <div class="col-12">
+      <label for="inputEmail" class="form-label">Usuario</label>
+      <input
+        type="email"
+        class="form-control"
+        id="inputEmail"
+        formControlName="user"
+        [class.is-invalid]="usuarioNoValido"
+      />
+      <div class="invalid-feedback" *ngIf="usuarioNoValido">
+        El nombre de usuario ya fue registrado.
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label for="inputPass1" class="form-label">Contraseña</label>
+      <input
+        type="password"
+        class="form-control"
+        id="inputPass1"
+        formControlName="pass1"
+        [class.is-invalid]="pass1NoValido"
+      />
+      <div class="invalid-feedback" *ngIf="pass1NoValido">
+        El campo contraseña es requerido.
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label for="inputPass2" class="form-label">Repetir contraseña</label>
+      <input
+        type="password"
+        class="form-control"
+        id="inputPass2"
+        formControlName="pass2"
+        [class.is-invalid]="pass2NoValido"
+      />
+      <div class="invalid-feedback" *ngIf="pass2NoValido">
+        La contraseñas no coinciden.
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 g-3" formGroupName="address">
+    <label class="col-2 col-form-label">Direccion</label>
+    <div class="col">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Distrito"
+        formControlName="district"
+        [class.is-invalid]="distritoNoValido"
+      />
+    </div>
+    <div class="col">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Ciudad"
+        formControlName="city"
+        [class.is-invalid]="ciudadNoValido"
+      />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Pasatiempo</th>
+            <th>Borrar</th>
+          </tr>
+        </thead>
+        <tbody formArrayName="hobbies">
+          <tr *ngFor="let item of pasatiempos.controls; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>
+              <input type="text" class="form-control" [formControlName]="i" />
+            </td>
+            <td>
+              <button class="btn btn-danger" (click)="borrarPasatiempo(i)">
+                Borrar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button
+        class="col-12 mb-4 btn btn-primary"
+        type="button"
+        (click)="agregarPasatiempo()"
+      >
+        + Agregar
+      </button>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-success">Guardar</button>
+  </div>
+</form>
+
+<hr />
+<pre>
+  Estado del formulario: {{form.valid}}
+  <br>
+  Status: {{ form.status }}
+</pre>
+
+<pre>
+  {{ form.value | json }}
+</pre>
